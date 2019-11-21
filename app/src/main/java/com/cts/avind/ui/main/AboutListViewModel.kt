@@ -20,7 +20,8 @@ class AboutListViewModel(): BaseViewModel(){
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loadAboutList() }
+    val refreshListListener = View.OnClickListener { loadAboutList() }
+    val titleMessage:MutableLiveData<String> = MutableLiveData()
 
     private lateinit var subscription: CompositeDisposable
 
@@ -36,6 +37,7 @@ class AboutListViewModel(): BaseViewModel(){
     private fun onAboutListStart(){
         loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
+        titleMessage.value = ""
     }
 
     private fun onAboutListFinish(){
@@ -43,6 +45,7 @@ class AboutListViewModel(): BaseViewModel(){
     }
 
     private fun onRetrieveAboutListSuccess(aboutData:Single<ListData>){
+        titleMessage.value = aboutData.blockingGet().title
         aboutListAdapter.updateAboutList(aboutData.blockingGet().rows)
     }
 

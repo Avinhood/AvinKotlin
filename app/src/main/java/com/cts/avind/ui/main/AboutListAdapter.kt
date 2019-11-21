@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cts.avind.data.main.Rows
 import com.cts.avind.R
 import com.cts.avind.databinding.ItemPostBinding
@@ -37,6 +38,9 @@ class AboutListAdapter: RecyclerView.Adapter<AboutListAdapter.ViewHolder>() {
         fun bind(rows:Rows){
             viewModel.bind(rows)
             binding.viewModel = viewModel
+
+            Glide.with(binding.ivImage.context).load(rows.imageHref).centerInside()
+                .placeholder(R.drawable.ic_launcher_background).into(binding.ivImage)
         }
     }
 }
